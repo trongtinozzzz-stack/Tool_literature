@@ -1,6 +1,17 @@
-const { app, BrowserWindow, shell, ipcMain } = require('electron');
 const path = require('path');
 const fs = require('fs');
+
+const electron = require('electron');
+
+// If executed directly with 'node' instead of the 'electron' runtime (e.g. Render / Cloud Web Service)
+if (!electron || typeof electron === 'string' || !electron.app) {
+  console.log('[Notice] Running under standard Node.js environment (e.g., Render / Cloud).');
+  console.log('[Notice] Starting Web Server via server.cjs...');
+  require('../server.cjs');
+  return;
+}
+
+const { app, BrowserWindow, shell, ipcMain } = electron;
 
 let mainWindow = null;
 
